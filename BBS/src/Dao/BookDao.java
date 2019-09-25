@@ -41,15 +41,6 @@ public class BookDao extends DBConnection {
 	// 책 예약을 위한 함수
 	public int borrow(String ID, String book) {
 		try {
-			int limit=0;
-			ArrayList<BookVo> list = SelectBook("");
-			for(int i=0;i<list.size();i++) {
-				if(list.get(i).getPerson_ID()==ID) limit++;
-				if(limit==5) return limit;
-				if(list.get(i).getBook_ID()==book&&list.get(i).getStatus()!="예약가능") {
-					return 0;
-				}
-			}
 			pstmt = conn.prepareStatement(
 					"INSERT INTO `library_s`.`borrow` (`person_ID`, `book_ID`, `start`, `end`, `status`)"
 							+ " VALUES (?, ?, ?, ?, '예약중');");

@@ -33,9 +33,6 @@ public class SeatDao extends DBConnection {
 				seat.setEnd(rs.getString(6));
 				list.add(seat);
 			}
-//			for(SeatVo s:list) {
-//				System.out.println(s.getColor());
-//			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -45,6 +42,7 @@ public class SeatDao extends DBConnection {
 	// 자리예약을 위한 함수
 	public int reserve(String ID, String seat) {
 		try {
+			// 사용이 가능한 자리인지 판별
 			ArrayList<SeatVo> list = SelectSeat("");
 			for (int i = 0; i < list.size(); i++) {
 				if (list.get(i).getSeat_ID() == seat && list.get(i).getStatus() != "사용가능") {
@@ -52,20 +50,27 @@ public class SeatDao extends DBConnection {
 					return 0;
 				}
 			}
-			
+			// 자리 대여가 가능한 회원인지 판별
+			list = SelectSeat(ID);
+			System.out.println(list.get(0));
+			System.out.println("here?");
+			if(list.size()==0) {
+				
 			pstmt = conn.prepareStatement(
 					"INSERT INTO `library_s`.`reserve` (`person_ID`, `seat_ID`, `start`, `end`, `status`)"
-					+ "VALUES (?, ?, ?, ?, '사용중');");
+							+ "VALUES (?, ?, ?, ?, '사용중');");
 			pstmt.setString(1, ID);
 			pstmt.setString(2, seat);
 			String[] time = getDate("t");
 			pstmt.setString(3, time[0]);
 			pstmt.setString(4, time[1]);
 			pstmt.executeUpdate();
-			new BatchDao().addBatch("자리", seat, ID,"자리 예약");
+			new BatchDao().addBatch("자리", seat, ID, "자리 예약");
 			return 1;
+			}else {
+				return 2;
+			}
 		} catch (Exception e) {
-			
 			return -1;
 		}
 	}
@@ -79,7 +84,6 @@ public class SeatDao extends DBConnection {
 			pstmt.executeUpdate();
 			return 1;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return 0;
 		}

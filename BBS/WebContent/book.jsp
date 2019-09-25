@@ -97,11 +97,6 @@ a, a:hover {
 					<%
 						BookDao bookDao = new BookDao();
 						ArrayList<BookVo> list = bookDao.SelectBook("");
-					
-						PrintWriter script = response.getWriter();
-						script.println("<script>");
-						script.println("alert('"+ list.get(0).getBook_ID() + "');");
-						script.println("</script>");
 						for (int i = 0; i < list.size(); i++) {
 					%>
 					

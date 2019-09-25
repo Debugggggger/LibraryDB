@@ -25,6 +25,7 @@
 			case -1: script.println("alert('시스템 오류입니다.')"); break;
 			case 0: script.println("alert('사용중인 자리입니다.')"); break;
 			case 1: script.println("alert('자리 예약이 완료되었습니다.')"); break;
+			case 2: script.println("alert('이미 사용중인 자리가 있습니다.')"); break;
 			default : script.println("alert('오류!')"); break;
 			}
 			script.println("location.href='seat.jsp'");

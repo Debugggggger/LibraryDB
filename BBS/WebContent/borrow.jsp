@@ -28,7 +28,7 @@
 			case 5: script.println("alert('5권까지 대여가 가능합니다.')"); break;
 			default : script.println("alert('오류!')"); break;
 			}
-			//script.println("location.href='book.jsp'");
+			script.println("location.href='book.jsp'");
 		}
 	}
 	script.println("</script>");

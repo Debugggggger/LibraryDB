@@ -11,8 +11,6 @@
 </head>
 <body>
 	<%
-		/* BatchDao bat = new BatchDao();
-		bat.runBatch(); */
 		String ID = null;
 		if (session.getAttribute("ID") != null) {
 			ID = (String) session.getAttribute("ID");
@@ -59,6 +57,7 @@
 			%>
 		</div>
 	</nav>
+	
 	<div class="container">
 		<div class="col-lg-4"></div>
 		<div class="col-lg-4">
