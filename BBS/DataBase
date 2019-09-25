@@ -1,0 +1,127 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema library_s
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema library_s
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `library_s` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin ;
+USE `library_s` ;
+
+-- -----------------------------------------------------
+-- Table `library_s`.`batch`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `library_s`.`batch` (
+  `code` INT(11) NOT NULL AUTO_INCREMENT,
+  `time` DATETIME(6) NOT NULL,
+  `division` VARCHAR(5) NOT NULL,
+  `ID` VARCHAR(45) NOT NULL,
+  `person_ID` VARCHAR(45) NOT NULL,
+  `note` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`code`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 45
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+
+-- -----------------------------------------------------
+-- Table `library_s`.`book`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `library_s`.`book` (
+  `book_ID` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `writer` VARCHAR(45) NOT NULL,
+  `brand` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`book_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+
+-- -----------------------------------------------------
+-- Table `library_s`.`member`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `library_s`.`member` (
+  `ID` VARCHAR(45) NOT NULL,
+  `PW` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `phone` VARCHAR(45) NOT NULL,
+  `birth` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+
+-- -----------------------------------------------------
+-- Table `library_s`.`borrow`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `library_s`.`borrow` (
+  `person_ID` VARCHAR(45) NOT NULL,
+  `book_ID` VARCHAR(45) NOT NULL,
+  `start` DATE NOT NULL,
+  `end` DATE NOT NULL,
+  `status` VARCHAR(10) NULL DEFAULT NULL,
+  PRIMARY KEY (`person_ID`, `book_ID`),
+  INDEX `fk_borrow_member1_idx` (`person_ID` ASC) VISIBLE,
+  INDEX `fk_borrow_book1_idx` (`book_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_borrow_book1`
+    FOREIGN KEY (`book_ID`)
+    REFERENCES `library_s`.`book` (`book_ID`),
+  CONSTRAINT `fk_borrow_member1`
+    FOREIGN KEY (`person_ID`)
+    REFERENCES `library_s`.`member` (`ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+
+-- -----------------------------------------------------
+-- Table `library_s`.`seat`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `library_s`.`seat` (
+  `seat_ID` VARCHAR(45) NOT NULL,
+  `floor` INT(11) NOT NULL,
+  `seatnumber` INT(11) NOT NULL,
+  PRIMARY KEY (`seat_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+
+-- -----------------------------------------------------
+-- Table `library_s`.`reserve`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `library_s`.`reserve` (
+  `person_ID` VARCHAR(45) NOT NULL,
+  `seat_ID` VARCHAR(45) NOT NULL,
+  `start` TIME NOT NULL,
+  `end` TIME NOT NULL,
+  `status` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`person_ID`, `seat_ID`),
+  INDEX `fk_reserve_member_idx` (`person_ID` ASC) VISIBLE,
+  INDEX `fk_reserve_seat1_idx` (`seat_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_reserve_member`
+    FOREIGN KEY (`person_ID`)
+    REFERENCES `library_s`.`member` (`ID`),
+  CONSTRAINT `fk_reserve_seat1`
+    FOREIGN KEY (`seat_ID`)
+    REFERENCES `library_s`.`seat` (`seat_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_bin;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
