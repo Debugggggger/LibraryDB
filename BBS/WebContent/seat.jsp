@@ -82,7 +82,6 @@ a, a:hover {
 			<table>
 				<tbody>
 					<%
-						int k = 0;
 						int s = 6;
 						SeatDao seatDao = new SeatDao();
 						ArrayList<SeatVo> list = seatDao.SelectSeat("");
@@ -92,25 +91,25 @@ a, a:hover {
 					<tr>
 						<%
 							for (int j = 0; j < s; j++) {
-									if (a[i * s + j] == 1) {
-										if (list.get(k).getStatus() == "사용가능") {
+								int index = a[i * s + j];
+									if (index != 0) {
+										if (list.get(--index).getStatus() == "사용가능") {
 						%>
 						<td style="background-color: #eeeeee">
-						<a href="reserve.jsp?Seat_ID=<%=list.get(k).getSeat_ID()%>">
-								<%=list.get(k).getSeatnumber()%>
+						<a href="reserve.jsp?Seat_ID=<%=list.get(index).getSeat_ID()%>">
+								<%=list.get(index).getSeatnumber()%>
 						</a>
 						</td>
 							<%
 								} else {
 							%>
 						<td style="background-color: #ffaaaa">
-						<%=list.get(k).getSeatnumber()%>
+						<%=list.get(index).getSeatnumber()%>
 						</td>
 							<%
 								}
 							%> 
 						<%
-							k++;
 									} else {
 						%>
 						<td style="border: 0px"></td>

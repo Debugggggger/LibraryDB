@@ -7,15 +7,31 @@ import Vo.SeatVo;
 public class SeatDao extends DBConnection {
 	
 	// 자리를 출력하기 위한 함수
-	public int[][] place = { {1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0,
-			0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0},{} };
-
+	public int[][] place = { {1, 2, 3, 0, 0, 0,
+							  4, 5, 6, 0, 0, 0,
+							  0, 0, 0, 0,19,20,
+							  7, 8, 9, 0,21,22,
+							 10,11,12, 0,23,24,
+							  0, 0, 0, 0,25,26,
+							 13,14,15, 0, 0, 0,
+							 16,17,18, 0, 0, 0},
+			
+							 {1, 0, 9,10, 0,23,
+							  2, 0,11,12, 0,24,
+							  3, 0,13,14, 0,25,
+							  4, 0, 0, 0, 0,26,
+							  5, 0,15,16, 0,27,
+							  6, 0,17,18, 0,28,
+							  7, 0,19,20, 0,29,
+							  8, 0,21,22, 0,30,
+							  } };
+	
 	// Select를 위한 함수
 	public ArrayList<SeatVo> SelectSeat(String person_ID) {
 		String query = "SELECT s.*, r.status, r.person_ID, r.end\r\n" + "FROM seat as s\r\n"
 				+ "LEFT OUTER JOIN reserve as r\r\n" + "on s.seat_ID = r.seat_ID\r\n" + is_ID(person_ID) + "\r\n"
 				+ "order by s.seat_ID;";
-
+		
 		ArrayList<SeatVo> list = new ArrayList<SeatVo>();
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -82,6 +98,7 @@ public class SeatDao extends DBConnection {
 			pstmt.setString(1, ID);
 			pstmt.setString(2, seat);
 			pstmt.executeUpdate();
+			new BatchDao().addBatch("자리", seat, ID, "자리 취소");
 			return 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -100,5 +117,11 @@ public class SeatDao extends DBConnection {
 			}
 		}
 		return list2;
+	}
+	
+	// 작업효율을 높이기 위해 뻘짓하는 함수
+	public String time_is_gold(int floor, ArrayList<SeatVo> list, int a[]) {
+		
+		return "";
 	}
 }

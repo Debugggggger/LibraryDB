@@ -64,6 +64,7 @@ public class BookDao extends DBConnection {
 			pstmt.setString(1, ID);
 			pstmt.setString(2, book);
 			pstmt.executeUpdate();
+			new BatchDao().addBatch("도서", book, ID, "도서 취소");
 			return 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
