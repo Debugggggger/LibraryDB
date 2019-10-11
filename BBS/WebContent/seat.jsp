@@ -83,9 +83,10 @@ a, a:hover {
 				<tbody>
 					<%
 						int s = 6;
+						int floor = 0;
 						SeatDao seatDao = new SeatDao();
 						ArrayList<SeatVo> list = seatDao.SelectSeat("");
-						int a[] = seatDao.place[0];
+						int a[] = seatDao.place[floor];
 						for (int i = 0; i < 8; i++) {
 					%>
 					<tr>
