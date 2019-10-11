@@ -66,24 +66,20 @@ public class SeatDao extends DBConnection {
 					return 0;
 				}
 			}
-			// 자리 대여가 가능한 회원인지 판별
-			list = SelectSeat(ID);
-			System.out.println(list.get(0));
-			System.out.println("here?");
-			if(list.size()==0) {
-				
-			pstmt = conn.prepareStatement(
-					"INSERT INTO `library_s`.`reserve` (`person_ID`, `seat_ID`, `start`, `end`, `status`)"
-							+ "VALUES (?, ?, ?, ?, '사용중');");
-			pstmt.setString(1, ID);
-			pstmt.setString(2, seat);
-			String[] time = getDate("t");
-			pstmt.setString(3, time[0]);
-			pstmt.setString(4, time[1]);
-			pstmt.executeUpdate();
-			new BatchDao().addBatch("자리", seat, ID, "자리 예약");
-			return 1;
-			}else {
+			list=SelectSeat(ID);
+			if (list.size() == 0) {
+				pstmt = conn.prepareStatement(
+						"INSERT INTO `library_s`.`reserve` (`person_ID`, `seat_ID`, `start`, `end`, `status`)"
+								+ "VALUES (?, ?, ?, ?, '사용중');");
+				pstmt.setString(1, ID);
+				pstmt.setString(2, seat);
+				String[] time = getDate("t");
+				pstmt.setString(3, time[0]);
+				pstmt.setString(4, time[1]);
+				pstmt.executeUpdate();
+				new BatchDao().addBatch("자리", seat, ID, "자리 예약");
+				return 1;
+			} else {
 				return 2;
 			}
 		} catch (Exception e) {
