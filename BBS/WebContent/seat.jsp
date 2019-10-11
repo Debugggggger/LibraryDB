@@ -86,14 +86,14 @@ a, a:hover {
 						int floor = 0;
 						SeatDao seatDao = new SeatDao();
 						ArrayList<SeatVo> list = seatDao.SelectSeat("");
-						int a[] = seatDao.place[floor];
+						int a[] = seatDao.place[0];
 						for (int i = 0; i < 8; i++) {
 					%>
 					<tr>
 						<%
 							for (int j = 0; j < s; j++) {
 								int index = a[i * s + j];
-									if (index != 0) {
+									if (index > 0) {
 										if (list.get(--index).getStatus() == "사용가능") {
 						%>
 						<td style="background-color: #eeeeee">
