@@ -32,7 +32,7 @@ public class BookDao extends DBConnection {
 			}
 
 		} catch (Exception e) {
-			System.out.println("디비에러!");
+			System.out.println("도서 디비에러!");
 		}
 		return list;
 	}
