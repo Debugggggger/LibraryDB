@@ -104,7 +104,7 @@
 								<td><%=list.get(i).getEnd()%></td>
 								<td><%=list.get(i).getStatus()%>
 								<%
-								if(list.get(i).getStatus() == "예약중"){
+								if(list.get(i).getStatus() != "예약중"){
 								%>
 								<a href="Unborrow.jsp?Book_ID=<%=list.get(i).getBook_ID()%>">
 								<Button class="button">취소</Button></a>
